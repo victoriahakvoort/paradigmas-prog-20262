@@ -29,8 +29,15 @@ class ClassroomResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'vacancies' => $this->vacancies,
+            'course' => $this->whenLoaded('course', function () {
+                return [
+                    'id' => $this->course->id,
+                    'name' => $this->course->name,
+                    'description' => $this->course->description,
+                ];
+            }),
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

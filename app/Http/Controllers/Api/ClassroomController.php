@@ -8,6 +8,7 @@ use App\Http\Resources\ClassroomResource;
 use App\Http\Services\ClassroomService;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
+use App\Http\Requests\ClassroomUserRequest;
 
 class ClassroomController extends Controller
 {
@@ -137,5 +138,21 @@ class ClassroomController extends Controller
         $this->classroomService->destroy($id);
 
         return response()->noContent();
+    }
+    public function manageUser(ClassroomUserRequest $request, string $id)
+    {
+        $data = $request->validated();
+
+        $this->classroomService->manageUser(
+            (int) $id,
+            $data['user_id'],
+            $data['action']
+        );
+
+        return response()->json([
+            'message' => $data['action'] === 'add'
+                ? 'Usuário associado à turma com sucesso.'
+                : 'Usuário removido da turma com sucesso.',
+        ]);
     }
 }

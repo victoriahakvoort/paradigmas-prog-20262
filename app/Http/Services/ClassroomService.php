@@ -15,4 +15,13 @@ class ClassroomService extends BaseService
     {
         return $this->classroomRepository->getWithFilters($data);
     }
+
+    public function manageUser(int $classroomId, int $userId, string $action)
+    {
+        return $this->classroomRepository->manageUser(
+            $classroomId,
+            $userId,
+            $action
+        );
+    }
 }
